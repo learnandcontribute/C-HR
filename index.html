@@ -791,6 +791,95 @@
         }
 
         /* ========================================
+           UVJETI KORIŠTENJA MODAL
+        ======================================== */
+        .uvjeti-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: var(--chr-surface);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 40px;
+            z-index: 2001;
+            display: none;
+            opacity: 0;
+            transition: all 0.5s var(--ease-out-expo);
+            max-width: 560px;
+            width: 92%;
+            max-height: 80vh;
+            overflow: hidden;
+        }
+
+        .uvjeti-modal.active {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .uvjeti-modal h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .uvjeti-content {
+            max-height: 55vh;
+            overflow-y: auto;
+            padding-right: 12px;
+        }
+
+        .uvjeti-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .uvjeti-content::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .uvjeti-content::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.12);
+            border-radius: 2px;
+        }
+
+        .uvjeti-content p {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--chr-mid);
+            margin-bottom: 14px;
+        }
+
+        .uvjeti-content a {
+            color: var(--toyota-red);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .uvjeti-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.5);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .uvjeti-close:hover {
+            background: rgba(235,10,30,0.1);
+            border-color: rgba(235,10,30,0.3);
+            color: var(--toyota-red);
+        }
+
+        /* ========================================
            SUCCESS MESSAGE
         ======================================== */
         .success-overlay {
@@ -1184,8 +1273,8 @@
                 </div>
                 <button type="submit" class="submit-button">Pošalji upit</button>
                 <p class="privacy-note">
-                    Klikom na pošalji, prihvaćate uvjete korištenja<br>
-                    <a href="#">politika privatnosti</a>
+                    Klikom na pošalji, prihvaćate <a href="#" onclick="event.preventDefault(); document.getElementById('uvjetiModal').classList.add('active'); document.getElementById('uvjetiOverlay').classList.add('active');">uvjete korištenja</a><br>
+                    <a href="https://local.toyota.hr/MiniPrivacyPolicyHR.pdf" target="_blank" rel="noopener">politika privatnosti</a>
                 </p>
             </form>
         </div>
@@ -1198,10 +1287,30 @@
             <span class="footer-text">&copy; 2026 Toyota Centar Zagreb</span>
         </div>
         <div class="footer-right">
-            <a href="#" class="footer-link">Politika privatnosti</a>
-            <a href="#" class="footer-link">Uvjeti korištenja</a>
+            <a href="https://local.toyota.hr/MiniPrivacyPolicyHR.pdf" target="_blank" rel="noopener" class="footer-link">Politika privatnosti</a>
+            <a href="#" onclick="event.preventDefault(); document.getElementById('uvjetiModal').classList.add('active'); document.getElementById('uvjetiOverlay').classList.add('active');" class="footer-link">Uvjeti korištenja</a>
         </div>
     </footer>
+
+    <!-- UVJETI KORIŠTENJA MODAL -->
+    <div class="success-overlay" id="uvjetiOverlay" onclick="document.getElementById('uvjetiModal').classList.remove('active'); this.classList.remove('active');"></div>
+    <div class="uvjeti-modal" id="uvjetiModal">
+        <button class="uvjeti-close" onclick="document.getElementById('uvjetiModal').classList.remove('active'); document.getElementById('uvjetiOverlay').classList.remove('active');">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l12 12M16 4L4 16"/></svg>
+        </button>
+        <h3>Uvjeti korištenja</h3>
+        <div class="uvjeti-content">
+            <p>Lokacija test vožnje je adresa odabranog ovlaštenog Toyota partnera! Odabrani partner će Vas kontaktirati oko dogovora i potvrde traženog termina i vozila.</p>
+            <p>Toyota Croatia d. o. o. Velikopoljska 1, 10 010 Novi Zagreb, Hrvatska, Toyota Adria d .o. o., Brnčičeva 51, 1231 Ljubljana, Slovenija i Toyota Motor Europe NV/SA („TME"), Avenue du Bourget / Bourgetlaan 60, 1140 Brussels, Belgija, i serviseri (popis je dostupan na <a href="https://www.toyota.hr/contact/dealers/list" target="_blank" rel="noopener">https://www.toyota.hr/contact/dealers/list</a>) će u službi „Voditelja obrade podataka" prikupljati vaše Osobne podatke (kao što je navedeno u nastavku) u svrhe koje su opisane u nastavku.</p>
+            <p>Kada nam se obratite sa zahtjevom za probnu vožnju, ponudu, obrazac, sastanak ili bilo kakvim drugim zahtjevom za informaciju o proizvodima, uslugama ili aplikacijama tvrtke Toyota/Lexus putem naše web-stranice Toyota/Lexus ili aplikacije Toyota/Lexus, primjenjuju se sljedeća pravila:</p>
+            <p>Osobni podaci koje nam šaljete: ime i prezime, adresa e-pošte te broj telefona;</p>
+            <p>Osobni podaci koje prikupljamo o vama:</p>
+            <p>Internetska stranica Toyota/Lexus koristi datoteke »log« poslužitelja u koje se zapisuju vaše interakcije s internetskom stranicom Toyota/Lexus s obzirom na internetske stranice koje posjetite s referencom na tadašnju IP adresu vašeg računala.</p>
+            <p>Automatski procesi koje koristimo za prikupljanje informacijama uključuju kolačiće, datoteke »log« i signal Wi-Fi dostupnih točaka. Te ćemo Osobne podatke upotrijebiti samo za ispunjavanje i izvršavanje vaših zahtjeva. Vaše Osobne podatke nećemo dijeliti ni sa jednom drugom tvrtkom, osim vaših određenih zahtjeva koji se mogu ispuniti upotrebom odabranih Ovlaštenih trgovaca/servisera <a href="https://www.toyota.hr/contact/dealers/list" target="_blank" rel="noopener">https://www.toyota.hr/contact/dealers/list</a>.</p>
+            <p>U bilo kojem trenutku možete opozvati svoju privolu za obradu podataka slanjem e-maila na adresu <a href="mailto:dpcp@toyota.hr">dpcp@toyota.hr</a> ili koristeći sljedeću poveznicu.</p>
+            <p>Prethodno navedena pravila trebate pročitati zajedno s Općom politikom privatnosti i zaštite osobnih podataka tvrtke Toyota u kojoj su opisani općeniti načini obrade vaših Osobnih podataka. Opća politika privatnosti i zaštite podataka nalazi se na poveznici.</p>
+        </div>
+    </div>
 
     <!-- SUCCESS OVERLAY -->
     <div class="success-overlay" id="successOverlay" onclick="closeSuccessMessage()"></div>
